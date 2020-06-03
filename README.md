@@ -97,3 +97,326 @@ Once deployed, test again.   You will likely need to open this function in the A
 
 Test this once again in Postman before deploying to Azure Cognitive Search.
 
+# Example Skillset
+
+```json
+{
+    "name": "abbyy-ocr-skillset",
+    "description": "Skillset created from the portal. skillsetName: abbyy-ocr-skillset;",
+    "skills": [
+        {
+            "@odata.type": "#Microsoft.Skills.Custom.WebApiSkill",
+            "name": "#1",
+            "description": "Convert Image to Text",
+            "context": "/document",
+            "uri": "https://my-abbyy-ocr.azurewebsites.net/api/AbbyyOCR?code=/gECNMreXdczJhGZKhziNiMnWO9hr123123123123==",
+            "httpMethod": "POST",
+            "timeout": "PT30S",
+            "batchSize": 4,
+            "degreeOfParallelism": null,
+            "inputs": [
+                {
+                    "name": "formUrl",
+                    "source": "/document/storage_url_decoded",
+                    "sourceContext": null,
+                    "inputs": []
+                },
+                {
+                    "name": "formSasToken",
+                    "source": "/document/metadata_storage_sas_token",
+                    "sourceContext": null,
+                    "inputs": []
+                }
+            ],
+            "outputs": [
+                {
+                    "name": "content",
+                    "targetName": "ocr_content"
+                }
+            ],
+            "httpHeaders": {}
+        }
+    ],
+    "cognitiveServices": {
+        "@odata.type": "#Microsoft.Azure.Search.CognitiveServicesByKey",
+        "description": "",
+        "key": "[Enter Your Cog Service Key]"
+    }
+}
+```
+
+# Example Search Index Schema
+```json
+{
+    "name": "abbyy-ocr",
+    "defaultScoringProfile": "",
+    "fields": [
+        {
+            "name": "content",
+            "type": "Edm.String",
+            "searchable": true,
+            "filterable": false,
+            "retrievable": true,
+            "sortable": false,
+            "facetable": false,
+            "key": false,
+            "indexAnalyzer": null,
+            "searchAnalyzer": null,
+            "analyzer": "standard.lucene",
+            "synonymMaps": []
+        },
+        {
+            "name": "metadata_storage_content_type",
+            "type": "Edm.String",
+            "searchable": false,
+            "filterable": true,
+            "retrievable": true,
+            "sortable": false,
+            "facetable": true,
+            "key": false,
+            "indexAnalyzer": null,
+            "searchAnalyzer": null,
+            "analyzer": null,
+            "synonymMaps": []
+        },
+        {
+            "name": "metadata_storage_size",
+            "type": "Edm.Int64",
+            "searchable": false,
+            "filterable": true,
+            "retrievable": true,
+            "sortable": false,
+            "facetable": true,
+            "key": false,
+            "indexAnalyzer": null,
+            "searchAnalyzer": null,
+            "analyzer": null,
+            "synonymMaps": []
+        },
+        {
+            "name": "metadata_storage_last_modified",
+            "type": "Edm.DateTimeOffset",
+            "searchable": false,
+            "filterable": true,
+            "retrievable": true,
+            "sortable": true,
+            "facetable": true,
+            "key": false,
+            "indexAnalyzer": null,
+            "searchAnalyzer": null,
+            "analyzer": null,
+            "synonymMaps": []
+        },
+        {
+            "name": "metadata_storage_content_md5",
+            "type": "Edm.String",
+            "searchable": false,
+            "filterable": false,
+            "retrievable": true,
+            "sortable": false,
+            "facetable": false,
+            "key": false,
+            "indexAnalyzer": null,
+            "searchAnalyzer": null,
+            "analyzer": null,
+            "synonymMaps": []
+        },
+        {
+            "name": "metadata_storage_name",
+            "type": "Edm.String",
+            "searchable": true,
+            "filterable": false,
+            "retrievable": true,
+            "sortable": false,
+            "facetable": false,
+            "key": false,
+            "indexAnalyzer": null,
+            "searchAnalyzer": null,
+            "analyzer": "standard.lucene",
+            "synonymMaps": []
+        },
+        {
+            "name": "metadata_storage_path",
+            "type": "Edm.String",
+            "searchable": false,
+            "filterable": false,
+            "retrievable": true,
+            "sortable": false,
+            "facetable": false,
+            "key": false,
+            "indexAnalyzer": null,
+            "searchAnalyzer": null,
+            "analyzer": null,
+            "synonymMaps": []
+        },
+        {
+            "name": "storage_url_encoded",
+            "type": "Edm.String",
+            "searchable": false,
+            "filterable": false,
+            "retrievable": true,
+            "sortable": false,
+            "facetable": false,
+            "key": true,
+            "indexAnalyzer": null,
+            "searchAnalyzer": null,
+            "analyzer": null,
+            "synonymMaps": []
+        },
+        {
+            "name": "storage_url_decoded",
+            "type": "Edm.String",
+            "searchable": false,
+            "filterable": false,
+            "retrievable": true,
+            "sortable": false,
+            "facetable": false,
+            "key": false,
+            "indexAnalyzer": null,
+            "searchAnalyzer": null,
+            "analyzer": null,
+            "synonymMaps": []
+        },
+        {
+            "name": "metadata_storage_file_extension",
+            "type": "Edm.String",
+            "searchable": false,
+            "filterable": true,
+            "retrievable": true,
+            "sortable": false,
+            "facetable": true,
+            "key": false,
+            "indexAnalyzer": null,
+            "searchAnalyzer": null,
+            "analyzer": null,
+            "synonymMaps": []
+        },
+        {
+            "name": "metadata_content_type",
+            "type": "Edm.String",
+            "searchable": false,
+            "filterable": true,
+            "retrievable": true,
+            "sortable": false,
+            "facetable": true,
+            "key": false,
+            "indexAnalyzer": null,
+            "searchAnalyzer": null,
+            "analyzer": null,
+            "synonymMaps": []
+        },
+        {
+            "name": "ocr_content",
+            "type": "Edm.String",
+            "searchable": true,
+            "filterable": false,
+            "retrievable": true,
+            "sortable": false,
+            "facetable": false,
+            "key": false,
+            "indexAnalyzer": null,
+            "searchAnalyzer": null,
+            "analyzer": "standard.lucene",
+            "synonymMaps": []
+        },
+        {
+            "name": "enriched",
+            "type": "Edm.String",
+            "searchable": false,
+            "filterable": false,
+            "retrievable": true,
+            "sortable": false,
+            "facetable": false,
+            "key": false,
+            "indexAnalyzer": null,
+            "searchAnalyzer": null,
+            "analyzer": null,
+            "synonymMaps": []
+        }
+    ],
+    "scoringProfiles": [],
+    "corsOptions": null,
+    "suggesters": [
+        {
+            "name": "sg",
+            "searchMode": "analyzingInfixMatching",
+            "sourceFields": [
+                "metadata_storage_name"
+            ]
+        }
+    ],
+    "analyzers": [],
+    "tokenizers": [],
+    "tokenFilters": [],
+    "charFilters": [],
+    "encryptionKey": null
+}
+```
+
+#Example Indexer
+```json
+{
+    "name": "abbyy-ocr-indexer",
+    "description": "",
+    "dataSourceName": "abbyy-ocr",
+    "skillsetName": "abbyy-ocr-skillset",
+    "targetIndexName": "abbyy-ocr",
+    "disabled": null,
+    "schedule": null,
+    "parameters": {
+        "batchSize": null,
+        "maxFailedItems": 0,
+        "maxFailedItemsPerBatch": 0,
+        "base64EncodeKeys": false,
+        "configuration": {
+            "dataToExtract": "allMetadata",
+            "parsingMode": "default",
+            "imageAction": "generateNormalizedImages"
+        }
+    },
+    "fieldMappings": [
+        {
+            "sourceFieldName": "metadata_storage_path",
+            "targetFieldName": "metadata_storage_path",
+            "mappingFunction": {
+                "name": "urlEncode",
+                "parameters": null
+            }
+        },
+        {
+            "sourceFieldName": "metadata_storage_path",
+            "targetFieldName": "storage_url_encoded",
+            "mappingFunction": {
+                "name": "base64Encode",
+                "parameters": null
+            }
+        },
+        {
+            "sourceFieldName": "metadata_storage_path",
+            "targetFieldName": "storage_url_decoded",
+            "mappingFunction": null
+        }
+    ],
+    "outputFieldMappings": []
+}
+```
+
+Example Data Source
+```json
+{
+    "name": "abbyy-ocr",
+    "description": null,
+    "type": "azureblob",
+    "subtype": null,
+    "credentials": {
+        "connectionString": null
+    },
+    "container": {
+        "name": "images-ocr",
+        "query": null
+    },
+    "dataChangeDetectionPolicy": null,
+    "dataDeletionDetectionPolicy": null
+}
+```
+
