@@ -39,7 +39,7 @@ var imageParams = new ImageProcessingParams
 
 # Test
 
-At this point we can test this function.  Click on ABBYYOCR in the Solution Explorer and choose F5.
+At this point we can test this function.  Click on ABBYYOCR in the Solution Explorer and choose F5.  Once it is running you will see a URL such as http://localhost:7071/api/AbbyyOCR.
 
 Open Postman and create a POST request to this URL.
 
@@ -91,7 +91,9 @@ The output will look similar to this:
 
 # Deploy
 
-At this point you can deploy this code to Azure Functions by right clicking on the ABBYYOCR project in the Solution Explorer and choosing Publish. Once it is running you will see a URL such as http://localhost:7071/api/AbbyyOCR.
+At this point you can deploy this code to Azure Functions by right clicking on the ABBYYOCR project in the Solution Explorer and choosing Publish. Deploy this to Azure Functions (App Services).
 
+Once deployed, test again.   You will likely need to open this function in the Azure Portal to get the full URL which will include a code for authentication such as https://my-test-abbyy.azurewebsites.net/api/AbbyyOCR?code=/gECNMreXdczJhGZKhziNiMnABC123==
 
+Test this once again in Postman before deploying to Azure Cognitive Search.
 
