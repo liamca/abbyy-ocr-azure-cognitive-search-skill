@@ -41,11 +41,6 @@ var imageParams = new ImageProcessingParams
 
 At this point we can test this function.  Click on ABBYYOCR in the Solution Explorer and choose F5.
 
-
-# Deploy
-
-At this point you can deploy this code to Azure Functions by right clicking on the ABBYYOCR project in the Solution Explorer and choosing Publish. Once it is running you will see a URL such as http://localhost:7071/api/AbbyyOCR.
-
 Open Postman and create a POST request to this URL.
 
 In the Body of the request, change the type to raw and enter JSON in a format such as this the below JSON.
@@ -74,6 +69,29 @@ NOTE: For your test, you will need to not only have the URL references to the Bl
 }
 ```
 
+The output will look similar to this:
+
+```json
+{
+    "values": [
+        {
+            "recordId": "foo2",
+            "data": {
+                "content": "التنمر..."
+            },
+            "errors": [],
+            "warnings": []
+        },
+        {
+                ...
+        }
+    ]
+}
+```
+
+# Deploy
+
+At this point you can deploy this code to Azure Functions by right clicking on the ABBYYOCR project in the Solution Explorer and choosing Publish. Once it is running you will see a URL such as http://localhost:7071/api/AbbyyOCR.
 
 
 
