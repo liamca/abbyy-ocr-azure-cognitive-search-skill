@@ -26,6 +26,17 @@ Open AbbyyOCR.cs and update the following lines:
         private const string ServiceUrl = "[Enter ABBYY Service URL such as https://cloud-westus.ocrsdk.com]";
 ```
 
+This code assumes that the images will be coming in, in either English, Arabic or Hebrew.  If you wish to change this, update the below code in the ProcessImageAsync function. You can find the list of [supported languages here](https://www.ocrsdk.com/documentation/specifications/recognition-languages/).
+
+```code
+var imageParams = new ImageProcessingParams
+{
+     ExportFormats = new[] { ExportFormat.Docx, ExportFormat.Txt, },
+     Language = "English,Arabic,Hebrew",
+};
+```
+
+
 # Test
 
 At this point we can test this function.  Click on ABBYYOCR in the Solution Explorer and choose F5.
