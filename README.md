@@ -353,7 +353,7 @@ Test this once again in Postman before deploying to Azure Cognitive Search.
 }
 ```
 
-#Example Indexer
+# Example Indexer
 ```json
 {
     "name": "abbyy-ocr-indexer",
@@ -401,7 +401,7 @@ Test this once again in Postman before deploying to Azure Cognitive Search.
 }
 ```
 
-Example Data Source
+# Example Data Source
 ```json
 {
     "name": "abbyy-ocr",
