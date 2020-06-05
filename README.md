@@ -99,6 +99,8 @@ Test this once again in Postman before deploying to Azure Cognitive Search.
 
 # Example Skillset
 
+NOTE: You may wish to adjust the degree of parallelism (degreeOfParallelism) up to 10.
+
 ```json
 {
     "name": "abbyy-ocr-skillset",
@@ -113,7 +115,7 @@ Test this once again in Postman before deploying to Azure Cognitive Search.
             "httpMethod": "POST",
             "timeout": "PT30S",
             "batchSize": 4,
-            "degreeOfParallelism": null,
+            "degreeOfParallelism": 5,
             "inputs": [
                 {
                     "name": "formUrl",
